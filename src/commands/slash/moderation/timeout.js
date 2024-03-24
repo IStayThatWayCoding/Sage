@@ -1,18 +1,20 @@
-const { SlashCommandBuilder, CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, codeBlock } = require("discord.js");
+const { SlashCommandBuilder, CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder, codeBlock, PermissionFlagsBits } = require("discord.js");
 const ExtendedClient = require("../../../class/ExtendedClient");
-const warnSchema = require('../../../schemas/warnSchema');
+const toSchema = require('../../../schemas/toSchema');
 const rules = require('../../../utils/rules')
 const { uuid } = require('uuidv4');
 const { sendResponse, dbCreate, dbDeleteOne } = require("../../../utils/utils");
+const ms = require('ms')
   
 module.exports = {
   structure: new SlashCommandBuilder()
-    .setName("warn")
-    .setDescription("Add/remove/list warning(s) from a user.")
+    .setName("timeout")
+    .setDescription("Add/lists timeouts to/from a user.")
+    .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
     .addSubcommand((subcommand) =>
       subcommand
         .setName("add")
-        .setDescription("Add a warning to a user")
+        .setDescription("Add a timeout to a user")
         .addUserOption((option) =>
           option
             .setName("username")
@@ -20,9 +22,15 @@ module.exports = {
             .setRequired(true)
         )
         .addStringOption((option) =>
+            option
+            .setName('duration')
+            .setDescription("Duration for timeout (30m, 1h, 1 day)")
+            .setRequired(true)
+        )
+        .addStringOption((option) =>
           option
             .setName("reason")
-            .setDescription("The reason for the warning")
+            .setDescription("The reason for the timeout")
             .setRequired(true)
             .addChoices(
               {
@@ -66,30 +74,30 @@ module.exports = {
           option
             .setName("custom")
             .setDescription(
-              "Provide a reason for warning the user (when selecting custom)"
+              "Provide a reason for timing out the user (when selecting custom)"
             )
             .setRequired(false)
         )
     )
     .addSubcommand((subcommand) =>
-      subcommand
-        .setName("remove")
-        .setDescription("Remove a warning from a user")
-        .addStringOption((option) =>
-          option
-            .setName("warning")
-            .setDescription("The warning ID to be removed")
-            .setRequired(true)
-        )
-    )
+    subcommand
+      .setName("remove")
+      .setDescription("Remove a timeout from a user")
+      .addStringOption((option) =>
+        option
+          .setName("timeout")
+          .setDescription("The timeout ID to be removed")
+          .setRequired(true)
+      )
+  )
     .addSubcommand((subcommand) =>
       subcommand
         .setName("list")
-        .setDescription("List warnings for a user")
+        .setDescription("List timeouts for a user")
         .addUserOption((option) =>
           option
             .setName("username")
-            .setDescription("The user you want to see warnings for")
+            .setDescription("The user you want to see timeouts for")
             .setRequired(true)
         )
     ),
@@ -98,6 +106,7 @@ module.exports = {
    * @param {ChatInputCommandInteraction} interaction
    */
   run: async (bot, interaction) => {
+    
     const array = [
         "Violation of Rule 1",
         "Violation of Rule 2",
@@ -115,10 +124,9 @@ module.exports = {
     ]
     const { member, guild, options } = interaction;
     const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER)
-    const logChannel = staffServer.channels.cache.get(process.env.WARNINGS_CHANNEL);
-    console.log(logChannel)
+    const logChannel = staffServer.channels.cache.get(process.env.TIMEOUTS_CHANNEL);
 
-    await interaction.deferReply();
+    await interaction.deferReply()
 
     switch (options.getSubcommand()) {
       case "add": {
@@ -128,20 +136,31 @@ module.exports = {
         const userID = user?.id;
         const username = user?.user.username;
         const authorTag = member?.user.username;
-        const warnID = uuid();
+        const toID = uuid();
         const author = member.id;
         const timestamp = new Date().getTime();
         let reason = options.getString("reason");
+        const duration = options.getString("duration");
 
-        // if (isNaN(reason)) reason = custom;
+        const msDuration = ms(duration);
+        if (isNaN(msDuration)) {
+          await interaction.editReply('Please provide a valid timeout duration.');
+          return;
+        }
+    
+        if (msDuration < 5000 || msDuration > 2.419e9) {
+            await interaction.editReply('Timeout duration cannot be less than 5 seconds or more than 28 days.');
+            return;
+          }
+
         if (!array.includes(reason)) reason = custom;
 
-        // No reason
         if (reason == null)
           return sendResponse(
             interaction,
             `A custom reason is **required** when selecting the 'Custom' option.`
           );
+
         // Reason exceeds limit
         if (reason && reason.length > 1024)
           return sendResponse(
@@ -149,7 +168,7 @@ module.exports = {
             `Reasons are limited to 1024 characters only.`
           );
         // User can't be found
-        if (!userID || !username )
+        if (!userID || !username)
           return sendResponse(
             interaction,
             `There was an error when finding the user`
@@ -157,15 +176,15 @@ module.exports = {
 
         // Logging
         let log = new EmbedBuilder()
-          .setColor("Orange")
+          .setColor("Red")
           .setAuthor({
             name: `${authorTag}`,
-            iconURL: user?.user.displayAvatarURL({ dynamic: false }),
+            iconURL: member?.user.displayAvatarURL({ dynamic: true }),
           })
           .setDescription(
-            `**User:** ${username} *(${userID})* \n**Reason** ${reason}`
+            `**User:** ${username} *(${toID})* \n**Reason** ${reason}`
           )
-          .setFooter({ text: `Warning added - ${warnID}` });
+          .setFooter({ text: `Timeout added - ${toID}` });
 
         logChannel
           .send({
@@ -174,74 +193,104 @@ module.exports = {
           .catch((err) => console.error(err));
 
         // DB
-        await dbCreate(warnSchema, {
-          guildID,
-          userID,
-          username,
-          warnID,
-          author,
-          authorTag,
-          timestamp,
-          reason,
-        });
-        // Fetch
-        const results = await warnSchema.find({ guildID, userID });
+        await dbCreate(toSchema, {
+            guildID,
+            userID,
+            username,
+            toID,
+            author,
+            authorTag,
+            timestamp,
+            reason,
+          });
 
-        if (results.length >= 3) {
-          // Ban user if warn limit is exceeded
-          await user
-            .ban({ days: 0, reason: `Warning Limit Exceeded` })
-            .then(() =>
-              sendResponse(interaction, `Your warning has been added`)
-            )
-            .catch(() =>
-              sendResponse(
-                interaction,
-                `This is ${user}'s third warning, but I couldn't ban them!`
-              )
-            );
-        } else {
-          // Notification
-          await user
-            .send({
-              content: `${user} - You have recieved a warning in ${
-                guild.name
-              } \n${codeBlock(reason)}`,
-            })
-            .then(() =>
-              sendResponse(interaction, `Your warning has been added!`)
-            )
-            .catch(() =>
-              sendResponse(
-                interaction,
-                `Your warning has been added, but I couldn't send a DM to ${user}`
-              )
-            );
+          // Fetch
+          const results = await toSchema.find({ guildID, userID });
+
+          try {
+
+            if (user.isCommunicationDisabled()) {
+                await user.timeout(msDuration, reason);
+                await sendResponse(interaction, `${user}'s timeout has been updated to ${msDuration}\nReason: ${reason}`)
+                return;
+            }
+
+            await user.timeout(msDuration, reason);;
+          } catch (error) {
+            console.log(error)
+          }
+
+
+          await user.send({
+            content: `${user} - You have been timed out in ${guild.name}\n${codeBlock(reason)}`
+          }).then(() => sendResponse(interaction, `Timeout has been added!`)).catch(() => sendResponse(interaction, `Timeout has been added, but I couldn't DM the user.`))
+        
+      }
+      break;
+      
+      case "list": {
+        const user = options.getMember("username");
+
+        const results = await toSchema.find({ userID: user.id });
+
+        // No results!!!!
+        if (results.length === 0)
+          return sendResponse(interaction, `User has no timeouts!`);
+
+        // Embed :D
+        let tEmbed = new EmbedBuilder()
+          .setColor("Blurple")
+          .setAuthor({
+            name: `Timeouts for ${user?.user.username}`,
+            iconURL: user?.user.displayAvatarURL({ dynamic: true }),
+          })
+          .setTimestamp();
+
+        let timeoutCount = `0`;
+        for (const timeout of results ) {
+            const { toID, author, timestamp, reason } = timeout;
+
+            const executor = guild.members.cache.get(author);
+
+            // Add Data
+          tEmbed.addFields({
+            name: `#${timeoutCount}`,
+            value: `**Member:** ${user?.user.username} *(${user?.id})*
+**Timed Out By:** ${executor.user.username} *(${executor.id})*
+**Date:** <t:${Math.round(timestamp / 1000)}> (<t:${Math.round(
+              timestamp / 1000
+            )}:R>)
+**Timeout ID:** ${toID}
+**Reason:** ${reason}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
+            inline: false,
+          });
+          timeoutCount++
         }
+        sendResponse(interaction, ``, [tEmbed]);
         break;
       }
-
       case "remove": {
-        const warning = options.getString("warning");
+        const timeout = options.getString("timeout");
         // Fetch warnings
-        const results = (await warnSchema.find({ warnID: warning }))[0];
+        const results = (await toSchema.find({ toID: timeout }))[0];
         // None were found, then:
         if (!results)
           return sendResponse(
             interaction,
-            `Warning *'${warning}'* does not exist or has already been removed`
+            `Timeout *'${timeout}'* does not exist or has already been removed`
           );
         // Find + Remove
-        await dbDeleteOne(warnSchema, { warnID: warning });
+        await dbDeleteOne(toSchema, { toID: timeout });
         // Log
         let log = new EmbedBuilder()
           .setColor("DarkGreen")
           .setAuthor({
             name: `${member.user.username}`,
-            iconURL: member.user.displayAvatarURL({ dynamic: false }),
+            iconURL: member.user.displayAvatarURL({ dynamic: true }),
           })
           .setDescription(`**User:** ${results.username} *(${results.userID})*`)
-          .setFooter({ text: `Warning Removed - ${results.warnID}` })
+          .setFooter({ text: `Timeout Removed - ${results.toID}` })
           .setTimestamp();
 
         logChannel
@@ -250,56 +299,9 @@ module.exports = {
           })
           .catch((err) => console.error(err));
         // Follow up
-        sendResponse(interaction, `Warning '${warning}' removed!`);
-        break;
-      }
-
-      case "list": {
-        const user = options.getMember("username");
-
-        // Fetch
-        const results = await warnSchema.find({ userID: user.id });
-
-        // No results!!!!
-        if (results.length === 0)
-          return sendResponse(interaction, `User has no warnings!`);
-
-        // Embed :D
-        let wEmbed = new EmbedBuilder()
-          .setColor("Blurple")
-          .setAuthor({
-            name: `Warnings for ${user?.user.username}`,
-            iconURL: user?.user.displayAvatarURL({ dynamic: false }),
-          })
-          .setTimestamp();
-
-        let warnCount = `0`;
-        for (const warning of results) {
-          const { warnID, author, timestamp, reason } = warning;
-
-          // Fetch user
-          const executor = guild.members.cache.get(author);
-
-          // Add Data
-          wEmbed.addFields({
-            name: `#${warnCount}`,
-            value: `**Member:** ${user?.user.username} *(${user?.id})*
-**Warned By:** ${executor.user.username} *(${executor.id})*
-**Date:** <t:${Math.round(timestamp / 1000)}> (<t:${Math.round(
-              timestamp / 1000
-            )}:R>)
-**Warning ID:** ${warnID}
-**Reason:** ${reason}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-            inline: false,
-          });
-          // Increase count
-          warnCount++;
-        }
-        // Follow up
-        sendResponse(interaction, ``, [wEmbed]);
+        sendResponse(interaction, `Timeout '${timeout}' removed!`);
         break;
       }
     }
-  },
-};
+
+  }}

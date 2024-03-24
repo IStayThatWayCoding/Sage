@@ -28,7 +28,7 @@ module.exports = {
     // })
 
     await interaction.reply({
-      content: "Select one of the components below.",
+      content: `Select one of the components below. ${process.env.CURRENCY}`,
       components: [
         new ActionRowBuilder().addComponents(
           new ButtonBuilder()

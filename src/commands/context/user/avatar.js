@@ -21,9 +21,9 @@ module.exports = {
 
         const response = new EmbedBuilder()
             .setColor(colors.TRANSPARENT)
-            .setAuthor({ name: `${target.user.username}`, iconURL: target.user.displayAvatarURL({ dynamic: true }) })
+            .setAuthor({ name: `${target.user.username}`, iconURL: target.user.displayAvatarURL({ dynamic: false }) })
             .setTitle("Avatar")
-            .setImage(`${target.user.displayAvatarURL({ dynamic: true })}?size=256`);
+            .setImage(`${target.user.displayAvatarURL({ dynamic: false })}?size=256`);
 
         sendResponse(interaction, ``, [response]);
 

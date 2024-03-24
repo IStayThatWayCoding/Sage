@@ -13,5 +13,7 @@ module.exports = {
         `Ban evasion and mute evasion are **__not allowed.__** If you are caught doing this, your main account's punishment will be extended.`,
         `Do not discuss or ask about other members' punishments, and don't ping or make fun of those that are muted (other people’s bans, mutes, etc.)`,
         `Please make sure you follow the Discord TOS and Community Guidelines. Failure to comply to these terms may get your account terminated!`
-    ]
+    ],
+    test: ["test", "test2"]
+
 }

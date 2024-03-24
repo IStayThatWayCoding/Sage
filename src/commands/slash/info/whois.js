@@ -1,4 +1,4 @@
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const ExtendedClient = require('../../../class/ExtendedClient');
 const colors = require('../../../colors.json')
 
@@ -10,10 +10,8 @@ module.exports = {
             option
               .setName('user')
               .setDescription("Member to fetch. Leave blank to use on yourself.")
-              .setRequired(false)),
-    options: {
-        developers: true
-    },
+              .setRequired(false))
+        .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers),
     /**
      * @param {ExtendedClient} bot 
      * @param {ChatInputCommandInteraction} interaction 

@@ -11,7 +11,7 @@ module.exports = (bot) => {
     
 
     setInterval(async () => {
-        const resolve = await fetch("https://api.crunchprank.net/twitch/followcount/itsoasislive")
+        const resolve = await fetch("https://decapi.me/twitch/followcount/itsoasislive")
         const data = await resolve.json();
         const channel = bot.channels.cache.get("1214645737846214676")
         // channel.send(`${data}`);
@@ -23,7 +23,7 @@ module.exports = (bot) => {
 
         let followerCount = kFormatter(data);
 
-        let vc = bot.channels.cache.get("1214646517068206080")
+        let vc = bot.channels.cache.get("1006433607222575155")
 
         vc.setName(`Twitch: ${followerCount}`).catch(err => console.error(`${path.basename(__filename)} There was a problem changing the channel follower name: `, err))
     }, 600000)

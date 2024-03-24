@@ -27,7 +27,7 @@ module.exports = (bot) => {
         const guild = bot.guilds.cache.get("755968485854675065")
         let subCountReal = kFormatter(subCount);
 
-        let vc = guild.channels.cache.get("1214650344483717200");
+        let vc = guild.channels.cache.get("1006053870293753937");
 
         vc.setName(`YouTube: ${subCountReal}`).catch(err => console.error(`${path.basename(__filename)} There was a problem changing the channel sub name: `, err))
 

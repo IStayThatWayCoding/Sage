@@ -184,7 +184,7 @@ module.exports = async (bot, message) => {
             message?.member?.roles.remove(lvl80);
           }
           // Send the user a notification
-          LVLCHANNEL.send({
+          message.channel.send({
             content: `${message?.author}, you just advanced to **Rank ${levelMath}**`,
           });
         } catch (err) {

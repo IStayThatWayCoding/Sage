@@ -58,7 +58,7 @@ module.exports = class extends Client {
         components(this);
         getTwitchFollowers(this);
         getMemberCount(this);
-        getSubCount(this);
+        //getSubCount(this);
 
         // mongoose();
 

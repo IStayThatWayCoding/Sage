@@ -9,7 +9,7 @@ module.exports = {
    * @param {import('discord.js').Interaction} interaction
    * @returns
    */
-  run: async (bot, message, interaction) => {
+  run: async (bot, interaction) => {
     const componentPermission = async (component) => {
       if (
         component.options?.public === false &&

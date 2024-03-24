@@ -39,7 +39,7 @@ module.exports = {
 
     await interaction.deferReply().catch(err => console.error(`${path.basename(__filename)} There was a problem deferring an interaction: `, err));
 
-    const target = options.getMember("username") || member;
+    const target = options.getMember("user") || member;
     const targetId = target?.user?.id || member?.id;
 
     // Load default images
@@ -49,7 +49,7 @@ module.exports = {
 
     const results = await rankSchema.find({ id: targetId });
     // If there are no results
-    if (results.length === 0) return sendResponse(interaction, `${process.env.BOT_DENY} ${target.user.username} isn't ranked yet. They need to send some messages to earn XP`);
+    if (results.length === 0) return sendResponse(interaction, `${target.user.username} isn't ranked yet. They need to send some messages to earn XP`);
 
     for (const info of results) {
         let { username, rank, level, msgCount, xxp, xxxp } = info;

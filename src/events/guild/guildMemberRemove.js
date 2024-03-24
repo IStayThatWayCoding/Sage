@@ -4,7 +4,7 @@ const { EmbedBuilder } = require("discord.js");
 const moment = require('moment')
 
 module.exports = {
-  event: "guildMemberAdd",
+  event: "guildMemberRemove",
   /**
    *
    * @param {ExtendedClient} bot
@@ -13,28 +13,16 @@ module.exports = {
    */
   run: async (bot, member) => {
     const guild = bot.guilds.cache.get(process.env.GUILD_ID);
-    const joinChannel = bot.channels.cache.get(process.env.JOINS);
 
     const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
     const logChannel = staffServer.channels.cache.get(process.env.JOINANDLEAVE);
 
     if(guild === staffServer) return;
 
-    joinChannel.send({
-      content: `## Hiya!  ⌍${member}.⌎ ✧ Welcome to Oasis's Starfall Islands⚡ ⊹˚𓂃・✧\n✨Select your pronouns at <id:customize> and feel free to introduce yourself in <#903578658986418197>! ✨ 🌊 Make yourself at home :>\n\n**Member** #${guild.memberCount}`,
-      allowedMentions: { parse: [] }
-
-    })
-
-    console.log(member)
-
     let log = new EmbedBuilder()
-      .setColor("Green")
-      .setAuthor({ name: `New Member Joined`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
+      .setColor("Red")
+      .setAuthor({ name: `Member Left`, iconURL: member.displayAvatarURL({ dynamic: true })})
       .setDescription(`${member}`)
-      .addFields(
-        { name: 'Account Created', value: `<t:${Math.round(member.user.createdAt / 1000)}:R>` }
-      )
       .setFooter({ text: `ID: ${member.id}`})
       .setTimestamp()
     

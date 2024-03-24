@@ -4,8 +4,8 @@ const ExtendedClient = require("../../class/ExtendedClient");
 const autoReply = require('../../modules/autoReply');
 const autoWarn = require("../../modules/autoWarn");
 const rankXP = require('../../modules/rank_xp')
-const colors = require('../../colors.json')
-
+const colors = require('../../colors.json');
+const stickyMessage = require("../../modules/stickyMessage");
 const cooldown = new Map();
 
 module.exports = {
@@ -61,6 +61,7 @@ module.exports = {
         autoReply(bot, message);
         autoWarn(bot, message);
         rankXP(bot, message);
+        stickyMessage(bot, message);
 
         // if (!message.content.startsWith(prefix)) return;
 

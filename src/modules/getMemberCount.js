@@ -30,8 +30,8 @@ module.exports = (bot) => {
         let realOnline = kFormatter2(totalOnline);
         let realTotal = kFormatter1(memberCount);
 
-        const channelOnline = guild.channels.cache.get("1214649471439216703")
-        const channelTotal = guild.channels.cache.get("1214649533934338158")
+        const channelOnline = guild.channels.cache.get("1006053954540544132")
+        const channelTotal = guild.channels.cache.get("1006053923360100402")
 
         channelOnline.setName(`Online Members: ${realOnline}`).catch(err => console.error(`${path.basename(__filename)} There was a problem changing a channel's name: `, err));
         channelTotal.setName(`Discord Members: ${realTotal}`).catch(err => console.error(`${path.basename(__filename)} There was a problem changing a channel's name: `, err))
