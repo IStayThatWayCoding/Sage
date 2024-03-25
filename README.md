@@ -15,10 +15,12 @@ Starfall Islands is a Discord Server owned by Swiftblade/Oasis. The server is a 
 
 **[Starfall Islands](https://discord.gg/RtsZcajWCR)**
 
+
 > [!WARNING]
 > Starfall Islands can NOT be used for support for discord.js issues (minor issues) and small bot issues. Please join my **[DISCORD SERVER](https://dsc.gg/istay)** __OR__ DM me on Discord if you have any questions about the bot: istay
 > Although the code here is free to use/modify, it is created **only** to be functional on a specific server and would not work anywhere else without a lot of modifying.
 > If you use this project, you will run into errors, as this is still a work in progress.
+
 
 # License
 Sage is licensed under the **[GPL-3.0 License](./LICENSE)**
