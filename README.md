@@ -1,5 +1,5 @@
-<a href="https://discord.gg/RtsZcajWCR"><img width="120" height="120" align="left" style="float: left" src="https://i.imgur.com/n8Qlxb5.gif"></a>
-  # Sage
+<a href="https://discord.gg/RtsZcajWCR"><img height="340" src="https://i.imgur.com/h9ghJYJ.gif"></a>
+# Sage
 
 [![Starfall Islands](https://img.shields.io/discord/755968485854675065?color=%235865F2&logo=discord&style=for-the-badge)](https://discord.gg/RtsZcajWCR)
 [![Language](https://img.shields.io/github/languages/top/IStayThatWayCoding/aquasis?color=f0db4f&logoColor=white&style=for-the-badge)]()
