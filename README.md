@@ -1,4 +1,4 @@
-<a href="https://discord.gg/RtsZcajWCR"><img height="340" src="https://i.imgur.com/h9ghJYJ.gif"></a>
+<a href="https://discord.gg/RtsZcajWCR"><img height="340" align="center" src="https://i.imgur.com/h9ghJYJ.gif"></a>
 # Sage
 
 [![Starfall Islands](https://img.shields.io/discord/755968485854675065?color=%235865F2&logo=discord&style=for-the-badge)](https://discord.gg/RtsZcajWCR)
