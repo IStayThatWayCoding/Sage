@@ -5,11 +5,9 @@
 [![Library](https://img.shields.io/badge/library-discord.js-5865f2?style=for-the-badge)](https://discord.js.org/#/)
 [![DiscordJS](https://img.shields.io/npm/v/discord.js.svg?maxAge=3600&style=for-the-badge)](https://www.npmjs.com/package/discord.js)
 
-Sage is a fully custom bot that is custom made and only used in <a href="https://discord.gg/RtsZcajWCR">**Starfall Islands**</a>.
+Sage is a bot that is custom made and only used in <a href="https://discord.gg/RtsZcajWCR">**Starfall Islands**</a>.
 
-The bot has tons of features to make the server a better place. It has a database to keep track of all user activity and have a custom rank system.
-
-Sage is currently being maintained and updates almost everyday with the best Discord API integration possible.
+Sage is currently being maintained and updates are made almost everyday with the best Discord API integration possible.
 
 # Starfall Islands
 
