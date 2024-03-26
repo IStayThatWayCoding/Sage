@@ -1,6 +1,6 @@
 # Sage
 
-[![Starfall Islands](https://img.shields.io/discord/755968485854675065?color=%235865F2&logo=discord&style=for-the-badge)](https://discord.gg/RtsZcajWCR)
+[![Starfall Islands](https://img.shields.io/discord/755968485854675065?color=%235865F2&logo=discord&style=for-the-badge)](discord.com/invite/RtsZcajWCR)
 [![Language](https://img.shields.io/github/languages/top/IStayThatWayCoding/aquasis?color=f0db4f&logoColor=white&style=for-the-badge)]()
 [![Library](https://img.shields.io/badge/library-discord.js-5865f2?style=for-the-badge)](https://discord.js.org/#/)
 [![DiscordJS](https://img.shields.io/npm/v/discord.js.svg?maxAge=3600&style=for-the-badge)](https://www.npmjs.com/package/discord.js)
