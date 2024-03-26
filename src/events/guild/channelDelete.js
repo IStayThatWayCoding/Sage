@@ -14,14 +14,16 @@ module.exports = {
    * @returns
    */
   run: async (bot, channel) => {
+    const guild = bot.guilds.cache.get(process.env.GUILD_ID)
+    const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
+    if (channel.guild == staffServer) return;
+    
     channel.guild.fetchAuditLogs({
       type: AuditLogEvent.ChannelDelete
     })
     .then(async audit => {
       const entry = audit.entries.first()
-      const guild = bot.guilds.cache.get(process.env.GUILD_ID)
-      const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
-      if (channel.guild == staffServer) return;
+
 
       const executor = await guild.members.fetch(entry.executor.id).catch(() => { });
 

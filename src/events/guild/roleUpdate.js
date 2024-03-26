@@ -49,29 +49,63 @@ module.exports = {
     //     roleUpdatedEmbed.addFields({ name: "Raw Position (bottom to top)", value: `${oldRole.rawPosition} → ${newRole.rawPosition}`})
     // }
 
-    const removedPerms = newRole.permissions.missing(oldRole.permissions)
-    const addedPerms = oldRole.permissions.missing(newRole.permissions)
-    let removedValue = `None`
-    let addedValue = `None`
+    // const removedPerms = newRole.permissions.missing(oldRole.permissions)
+    // const addedPerms = oldRole.permissions.missing(newRole.permissions)
+    // let removedValue = `None`
+    // let addedValue = `None`
 
-    if (addedPerms.length == 0){
-        addedValue = `None`
-    } else {
-        addedValue = `${addedPerms.join(", ")}`
-    }
+    // if (addedPerms.length == 0){
+    //     addedValue = `None`
+    // } else {
+    //     addedValue = `${addedPerms.join(", ")}`
+    // }
 
-    if (removedPerms.length == 0){
+    // if (removedPerms.length == 0){
         
-        removedValue = `None`
-    } else {
-        removedValue = `${removedPerms.join(", ")}`
+    //     removedValue = `None`
+    // } else {
+    //     removedValue = `${removedPerms.join(", ")}`
+    // }
+
+    // Fetch permissions of the old role
+    const oldPermissions = oldRole.permissions.toArray();
+    
+    // Fetch permissions of the new role
+    const newPermissions = newRole.permissions.toArray();
+    
+    // Initialize arrays to store permissions added and removed
+    const permissionsAdded = [];
+    const permissionsRemoved = [];
+
+    // Compare permissions
+    for (const permission of newPermissions) {
+        if (!oldPermissions.includes(permission)) {
+            // Permission exists in new role but not in old role
+            permissionsAdded.push(permission);
+        }
     }
+
+    for (const permission of oldPermissions) {
+        if (!newPermissions.includes(permission)) {
+            // Permission exists in old role but not in new role
+            permissionsRemoved.push(permission);
+        }
+    }
+
+    // Construct strings for added and removed permissions
+    const addedString = permissionsAdded.length > 0 ? permissionsAdded.join(', ') : 'No permissions added.';
+    const removedString = permissionsRemoved.length > 0 ? permissionsRemoved.join(', ') : 'No permissions removed.';
+
+
+
+    console.log(addedString)
+    console.log(removedString)
 
 
     if (oldRole.permissions !== newRole.permissions) {
         roleUpdatedEmbed.addFields(
-            { name: "Added Permissions", value: `${addedValue}`},
-            { name: "Removed Permissions", value: `${removedValue}`},
+            { name: "Added Permissions", value: `${addedString}`},
+            { name: "Removed Permissions", value: `${removedString}`},
         )
     }
     
