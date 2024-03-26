@@ -1,5 +1,6 @@
 const { readdirSync, readdir } = require('fs')
 const ExtendedClient = require('../class/ExtendedClient')
+const fetch = require('node-fetch').default;
 
 /**
  * 

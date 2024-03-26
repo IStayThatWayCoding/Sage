@@ -10,6 +10,7 @@ const getTwitchFollowers = require('../modules/getTwitchFollowers');
 const getMemberCount = require('../modules/getMemberCount');
 const getSubCount = require('../modules/getSubCount');
 const Canvas = require('canvas');
+const tweets = require("../modules/tweets");
 
 module.exports = class extends Client {
     collection = {
