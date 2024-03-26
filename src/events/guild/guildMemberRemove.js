@@ -17,12 +17,12 @@ module.exports = {
     const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
     const logChannel = staffServer.channels.cache.get(process.env.JOINANDLEAVE);
 
-    if(guild === staffServer) return;
+    if(member.guild.id === staffServer.id) return;
 
     let log = new EmbedBuilder()
       .setColor("Red")
       .setAuthor({ name: `Member Left`, iconURL: member.displayAvatarURL({ dynamic: true })})
-      .setDescription(`${member}`)
+      .setDescription(`<@${member.user.id}> ${member.user.username}`)
       .setFooter({ text: `ID: ${member.id}`})
       .setTimestamp()
     

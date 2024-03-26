@@ -43,8 +43,8 @@ module.exports = {
                 (user ? message.author.id === user.id : !message.system) && amount > i ? (filtered.push(message), i++) : null;
             });
             const bulkDelete = await channel.bulkDelete(filtered, true).catch(err => console.error(`There was a problem deleting a message: `, err))
-            const responseWithUser = `${bulkDelete.size} messages from ${user} deleted in ${channel}`;
-            const responseWithoutUser = `${bulkDelete.size} messages deleted in ${channel}`;
+            const responseWithUser = `Extraneous data purged to optimize system performance. ${bulkDelete.size} messages from ${user} removed in ${channel} for streamlined operation.`;
+            const responseWithoutUser = `Extraneous data purged to optimize system performance. ${bulkDelete.size} messages have been removed in ${channel} for streamlined operation.`;
             sendResponse(interaction, `${user ? responseWithUser : responseWithoutUser}`);
             return bulkDelete.size;
         }

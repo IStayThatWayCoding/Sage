@@ -148,7 +148,7 @@ module.exports = {
     // No reason (custom) provided
     if (reason == null) return sendResponse(interaction, `A custom reason is **required** when selecting the 'Custom' option.`)
     // Send
-    sendResponse(interaction, `${targetUser} has been kicked!`);
+    sendResponse(interaction, `${targetUser} forcibly relocated as a precautionary measure. Compliance with protocol enforced. Reason: ${reason}`, [], [], [], true);
     // Notification (if possible)
     await targetUser.send({
         content: `## You have been kicked from ${guild.name}\n> ${reason}`

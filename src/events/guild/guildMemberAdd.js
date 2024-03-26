@@ -18,7 +18,7 @@ module.exports = {
     const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
     const logChannel = staffServer.channels.cache.get(process.env.JOINANDLEAVE);
 
-    if(guild === staffServer) return;
+    if(member.guild.id === staffServer.id) return;
 
     joinChannel.send({
       content: `## Hiya!  ⌍${member}.⌎ ✧ Welcome to Oasis's Starfall Islands⚡ ⊹˚𓂃・✧\n✨Select your pronouns at <id:customize> and feel free to introduce yourself in <#903578658986418197>! ✨ 🌊 Make yourself at home :>\n\n**Member** #${guild.memberCount}`,
@@ -31,7 +31,7 @@ module.exports = {
     let log = new EmbedBuilder()
       .setColor("Green")
       .setAuthor({ name: `New Member Joined`, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
-      .setDescription(`${member}`)
+      .setDescription(`${member} ${member.user.username}`)
       .addFields(
         { name: 'Account Created', value: `<t:${Math.round(member.user.createdAt / 1000)}:R>` }
       )

@@ -156,7 +156,7 @@ module.exports = {
     const alreadyBanned = await guild.bans.fetch(user.id).catch(() => { });
     if (alreadyBanned) return sendResponse(interaction, `User is already banned`);
     // Send
-    sendResponse(interaction, `${user.username} has been banned!`);
+    sendResponse(interaction, `**${user.username}** has been successfully removed from the vicinity. Logical decision executed for the sake of system stability. Reason: ${reason}`)
     // Notification (if possible)
     await user.send({
         content: `## You have been banned from ${guild.name}\n> ${reason}`

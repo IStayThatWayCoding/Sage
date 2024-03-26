@@ -223,8 +223,7 @@ module.exports = {
 
           await user.send({
             content: `${user} - You have been timed out in ${guild.name}\n${codeBlock(reason)}`
-          }).then(() => sendResponse(interaction, `Timeout has been added!`)).catch(() => sendResponse(interaction, `Timeout has been added, but I couldn't DM the user.`))
-        
+          }).then(() => sendResponse(interaction, `${user} has been temporarily silenced to maintain harmony within the environment. Duration: ${msDuration}. Reason: ${reason}.`).catch(() => sendResponse(interaction, `${user} has been silenced, but I couldn't DM the user.`)))
       }
       break;
       
