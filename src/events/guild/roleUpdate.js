@@ -35,14 +35,17 @@ module.exports = {
     
     if (oldRole.name !== newRole.name){
         roleUpdatedEmbed.addFields({ name: "Role Name", value: `${oldRole.name} → ${newRole.name}`})
+        return;
     }
 
     if (oldRole.color !== newRole.color) {
         roleUpdatedEmbed.addFields({ name: "Color", value: `${oldRole.hexColor} → ${newRole.hexColor}`})
+        return;
     }
 
     if (oldRole.hoist !== newRole.hoist) {
         roleUpdatedEmbed.addFields({ name: "Hoisted", value: `${oldRole.hoist} → ${newRole.hoist}`})
+        return;
     }
 
     // if (oldRole.rawPosition !== newRole.rawPosition) {
@@ -83,6 +86,7 @@ module.exports = {
             // Permission exists in new role but not in old role
             permissionsAdded.push(permission);
         }
+        return;
     }
 
     for (const permission of oldPermissions) {
@@ -90,6 +94,7 @@ module.exports = {
             // Permission exists in old role but not in new role
             permissionsRemoved.push(permission);
         }
+        return;
     }
 
     // Construct strings for added and removed permissions
@@ -98,8 +103,8 @@ module.exports = {
 
 
 
-    console.log(addedString)
-    console.log(removedString)
+    // console.log(addedString)
+    // console.log(removedString)
 
 
     if (oldRole.permissions !== newRole.permissions) {
@@ -107,13 +112,17 @@ module.exports = {
             { name: "Added Permissions", value: `${addedString}`},
             { name: "Removed Permissions", value: `${removedString}`},
         )
+        return;
     }
     
     if (oldRole.mentionable !== newRole.mentionable){
         roleUpdatedEmbed.addFields(
             { name: "Mentionable", value: `${oldRole.mentionable} → ${newRole.mentionable}`}
         )
+        return;
     }
+
+    if (oldRole.rawPosition !== newRole.rawPosition) return;
 
     logChannel.send({
         embeds: [roleUpdatedEmbed]
