@@ -21,10 +21,10 @@ const { sendResponse } = require("../../../utils/utils");
      */
     run: async (bot, interaction) => {
 
-        const days = Math.floor(client.uptime / 86400000)
-        const hours = Math.floor(client.uptime / 3600000) % 24 // 1 Day = 24 Hours
-        const minutes = Math.floor(client.uptime / 60000) % 60 // 1 Hour = 60 Minutes
-        const seconds = Math.floor(client.uptime / 1000) % 60 // I Minute = 60 Seconds
+        const days = Math.floor(bot.uptime / 86400000)
+        const hours = Math.floor(bot.uptime / 3600000) % 24 // 1 Day = 24 Hours
+        const minutes = Math.floor(bot.uptime / 60000) % 60 // 1 Hour = 60 Minutes
+        const seconds = Math.floor(bot.uptime / 1000) % 60 // I Minute = 60 Seconds
 
 
         const uptimeEmbed = new EmbedBuilder()
@@ -32,5 +32,5 @@ const { sendResponse } = require("../../../utils/utils");
             .setColor("DarkNavy")
             .setDescription(`${bot.user.username} has been up for: \n\`${days}\` days \`${hours}\` hours \`${minutes}\` minutes \`${seconds}\` seconds`)
 
-        sendResponse(interation, ``, uptimeEmbed, [], [], true)
+        sendResponse(interaction, ``, uptimeEmbed, [], [], true)
     }}
