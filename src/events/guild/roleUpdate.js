@@ -113,6 +113,8 @@ module.exports = {
             { name: "Removed Permissions", value: `${removedString}`},
         )
         
+    } else {
+        return;
     }
     
     if (oldRole.mentionable !== newRole.mentionable){
