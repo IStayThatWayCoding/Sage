@@ -22,6 +22,8 @@ module.exports = {
         const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
         if(message.guild === staffServer) return;
 
+        const DMC = staffServer.channels.cache.get(process.env.DMLOGS)
+
         if (message?.channel.type === 1) {
           const images = [];
 
@@ -48,7 +50,7 @@ module.exports = {
               }\`\`\`\n\n**ATTACHMENTS:**\n ${images}`
             );
 
-          const DMC = bot.channels.cache.get("1048464804030992384");
+        //   const DMC = bot.channels.cache.get("1048464804030992384");
           DMC.send({
             embeds: [dmEmbed]
           });
