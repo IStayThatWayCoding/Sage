@@ -21,6 +21,9 @@ const { sendResponse } = require("../../../utils/utils");
      */
     run: async (bot, interaction) => {
 
+        await interaction.deferReply()
+        // add ephermeral if needed
+
         const days = Math.floor(bot.uptime / 86400000)
         const hours = Math.floor(bot.uptime / 3600000) % 24 // 1 Day = 24 Hours
         const minutes = Math.floor(bot.uptime / 60000) % 60 // 1 Hour = 60 Minutes
@@ -29,8 +32,8 @@ const { sendResponse } = require("../../../utils/utils");
 
         const uptimeEmbed = new EmbedBuilder()
             .setAuthor({ name: `Uptime of ${bot.user.username}`, iconURL: bot.user.displayAvatarURL({ dynamic: true }) })
-            .setColor("DarkNavy")
+            .setColor("Fuchsia")
             .setDescription(`${bot.user.username} has been up for: \n\`${days}\` days \`${hours}\` hours \`${minutes}\` minutes \`${seconds}\` seconds`)
 
-        sendResponse(interaction, ``, uptimeEmbed, [], [], true)
+        await sendResponse(interaction, ``, [uptimeEmbed])
     }}
