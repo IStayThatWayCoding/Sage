@@ -18,25 +18,25 @@ module.exports = {
    * @param {ChatInputCommandInteraction} interaction
    */
   run: async (bot, interaction) => {
-    // const message = await interaction.deferReply({
-    //     fetchReply: true
-    // });
-
-    // const newMessage = `API Latency: ${bot.ws.ping}\nBot Ping: ${message.createdTimestamp - interaction.createdTimestamp}`
-    // await interaction.editReply({
-    //     content: newMessage
-    // })
-
-    await interaction.reply({
-      content: `Select one of the components below. ${process.env.CURRENCY}`,
-      components: [
-        new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId("example-button")
-            .setLabel("Example Button")
-            .setStyle(1)
-        ),
-      ],
+    const message = await interaction.deferReply({
+        fetchReply: true
     });
+
+    const newMessage = `API Latency: ${bot.ws.ping}\nBot Ping: ${message.createdTimestamp - interaction.createdTimestamp}`
+    await interaction.editReply({
+        content: newMessage
+    })
+
+    // await interaction.reply({
+    //   content: `Select one of the components below. ${process.env.CURRENCY}`,
+    //   components: [
+    //     new ActionRowBuilder().addComponents(
+    //       new ButtonBuilder()
+    //         .setCustomId("example-button")
+    //         .setLabel("Example Button")
+    //         .setStyle(1)
+    //     ),
+    //   ],
+    // });
   },
 };
