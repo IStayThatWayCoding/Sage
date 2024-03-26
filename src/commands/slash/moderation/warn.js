@@ -192,7 +192,7 @@ module.exports = {
           await user
             .ban({ days: 0, reason: `Warning Limit Exceeded` })
             .then(() =>
-              sendResponse(interaction, `Your warning has been added`)
+              sendResponse(interaction, `A cautionary notification has been issued. It's advisable to reconsider actions for optimal outcome.`)
             )
             .catch(() =>
               sendResponse(
@@ -209,7 +209,7 @@ module.exports = {
               } \n${codeBlock(reason)}`,
             })
             .then(() =>
-              sendResponse(interaction, `Your warning has been added!`)
+              sendResponse(interaction, `⚠️ A cautionary notification has been issued for ${user}. It's advisable to reconsider actions for optimal outcome. Reason: ${reason}`)
             )
             .catch(() =>
               sendResponse(

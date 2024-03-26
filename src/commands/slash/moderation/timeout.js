@@ -223,7 +223,7 @@ module.exports = {
 
           await user.send({
             content: `${user} - You have been timed out in ${guild.name}\n${codeBlock(reason)}`
-          }).then(() => sendResponse(interaction, `${user} has been temporarily silenced to maintain harmony within the environment. Duration: ${msDuration}. Reason: ${reason}.`).catch(() => sendResponse(interaction, `${user} has been silenced, but I couldn't DM the user.`)))
+          }).then(() => sendResponse(interaction, `⌚ ${user} has been temporarily silenced to maintain harmony within the environment. Duration: ${msDuration}. Reason: ${reason}.`).catch(() => sendResponse(interaction, `${user} has been silenced, but I couldn't DM the user.`)))
       }
       break;
       
@@ -234,7 +234,7 @@ module.exports = {
 
         // No results!!!!
         if (results.length === 0)
-          return sendResponse(interaction, `User has no timeouts!`);
+          return sendResponse(interaction, `The user is currently free from timeouts.`);
 
         // Embed :D
         let tEmbed = new EmbedBuilder()

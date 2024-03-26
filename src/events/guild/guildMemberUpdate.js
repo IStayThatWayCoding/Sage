@@ -16,7 +16,7 @@ module.exports = {
     const guild = bot.guilds.cache.get(process.env.GUILD_ID);
     
     const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
-    const logChannel = staffServer.channels.cache.get(process.env.ROLES);
+    const logChannel = staffServer.channels.cache.get(process.env.MEMBERS);
 
     if(newMember.guild.id === staffServer.id) return;
 
@@ -25,6 +25,27 @@ module.exports = {
     const entry = auditLog.entries.first()
 
     const executor = await guild.members.fetch(entry.executor.id).catch(() => { });
+
+    const oldUsername = oldMember.nickname || "Original " + "(" + oldMember.user.username + ")"
+    const newUsername = newMember.nickname || "Original " + "(" + newMember.user.username + ")"
+
+    // Nickname Detector
+    if (oldMember.nickname !== newMember.nickname){
+        const embed = new EmbedBuilder()
+            .setAuthor({ name: `${newMember.user.username}`, iconURL: newMember.user.displayAvatarURL({ dynamic: true}) })
+            .setDescription(`${newMember} changed their nickname`)
+            .setColor("Blue")
+            .addFields(
+                { name: "Before", value: `${oldUsername}`},
+                { name: "After", value: `${newUsername}`}
+            )
+            .setFooter({ text: `ID: ${newMember.id}` })
+            .setTimestamp()
+        
+        logChannel.send({
+            embeds: [embed]
+        })
+    }
 
     // console.log(oldMember)
     // console.log(newMember)
@@ -73,10 +94,13 @@ module.exports = {
                 }
             }
         })
+    } else {
+        return;
     }
     
     logChannel.send({
         embeds: [roleUpdateEmbed]
     })
+
 
   }}

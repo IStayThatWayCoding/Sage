@@ -59,5 +59,6 @@ module.exports = {
         embeds: [log]
     }).catch(err => console.error(err));
 
-    sendResponse(interaction, `**${fetchBan.user.username}** has been unbanned`)
+    sendResponse(interaction, `✅ Reversal of previous action initiated. **${fetchBan.user.username}** unbanned for recalibration of system dynamics. Reason: ${reason}`)
+    
 }}

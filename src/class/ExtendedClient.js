@@ -38,18 +38,19 @@ module.exports = class extends Client {
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
                 GatewayIntentBits.DirectMessages,
-                GatewayIntentBits.GuildVoiceStates
+                GatewayIntentBits.GuildVoiceStates,
             ],        
             partials: [
-                Partials.Channel
+                Partials.Channel,
+                Partials.User
             ],
-            presence: {
-                activities: [{
-                    name: 'Sage',
-                    type: 4,
-                    state: "Being born",
-                }]
-            }
+            // presence: {
+            //     activities: [{
+            //         name: 'custom',
+            //         type: 4,
+            //         state: `presence`,
+            //     }]
+            // }
         });
     };
 
@@ -62,7 +63,6 @@ module.exports = class extends Client {
         //getSubCount(this);
 
         // mongoose();
-
         await this.login(process.env.TOKEN);
         
         deploy(this, config);

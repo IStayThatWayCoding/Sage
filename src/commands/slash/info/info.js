@@ -15,20 +15,11 @@ module.exports = {
     .setDescription(
       "Gives specific information on a specific function of the server"
     )
-    .addStringOption((option) =>
+    .addUserOption(option =>
       option
-        .setName("category")
-        .setDescription("The category you want information about")
-        .setRequired(true)
-        .addChoices(
-          { name: "Levels", value: "levels" },
-          { name: "Roles", value: "roles" },
-          { name: "Oasis", value: "oasis" },
-          { name: "XP", value: "xp"},
-          { name: "Sage", value: "sage" },
-          { name: "Content Creator", value: "content-creator" }
-        )
-    ),
+        .setName('user')
+        .setDescription("Member to fetch. Leave blank to use on yourself.")
+        .setRequired(false)),
   /**
    * @param {ExtendedClient} bot
    * @param {ChatInputCommandInteraction} interaction
