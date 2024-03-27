@@ -1,5 +1,6 @@
 const config = require("../../config");
 const ExtendedClient = require("../../class/ExtendedClient");
+const ticketSchema = require('../../schemas/ticketSchema')
 
 module.exports = {
   event: "interactionCreate",
@@ -53,7 +54,6 @@ module.exports = {
         interaction.customId
       );
 
-
       if (!component) return;
 
       if (!(await componentPermission(component))) return;
@@ -63,6 +63,7 @@ module.exports = {
       } catch (error) {
         log(error, "error");
       }
+
 
       return;
     }

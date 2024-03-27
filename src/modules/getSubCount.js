@@ -16,9 +16,8 @@ module.exports = (bot) => {
         const resolve = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${oasis}&key=${apiKey}`)
         const data = await resolve.json();
         const channel = bot.channels.cache.get("1214645737846214676")
-        // console.log(data);
 
-        let subCount = data["items"][0].statistics.subscriberCount;
+        let subCount = data.items[0].statistics.subscriberCount
 
         function kFormatter(num){
             const regExp = new RegExp('^-?\\d+(?:\.\\d{0,' + (1 || -1) + '})?');
@@ -31,5 +30,5 @@ module.exports = (bot) => {
 
         vc.setName(`YouTube: ${subCountReal}`).catch(err => console.error(`${path.basename(__filename)} There was a problem changing the channel sub name: `, err))
 
-    }, 3000)
+    }, 600000)
 }
