@@ -1,6 +1,5 @@
 const { readdirSync, readdir } = require('fs')
 const ExtendedClient = require('../class/ExtendedClient')
-const fetch = require('node-fetch').default;
 
 /**
  * 
@@ -13,7 +12,7 @@ module.exports = (bot) => {
 
     setInterval(async () => {
         const resolve = await fetch("https://decapi.me/twitch/followcount/itsoasislive")
-        const data = await resolve.text();
+        const data = await resolve.JSON();
         const channel = bot.channels.cache.get("1214645737846214676")
         // channel.send(`${data}`);
 
