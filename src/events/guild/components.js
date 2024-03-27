@@ -1,6 +1,5 @@
 const config = require("../../config");
 const ExtendedClient = require("../../class/ExtendedClient");
-const ticketSchema = require('../../schemas/ticketSchema')
 
 module.exports = {
   event: "interactionCreate",
