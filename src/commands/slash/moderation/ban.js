@@ -69,7 +69,7 @@ module.exports = {
         option
             .setName('screenshot')
             .setDescription("A screenshot of the reason")
-            .setRequired(true)
+            .setRequired(false)
         ))
     .addAttachmentOption((option =>
         option
