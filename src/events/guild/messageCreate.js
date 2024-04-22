@@ -6,6 +6,7 @@ const autoWarn = require("../../modules/autoWarn");
 const rankXP = require('../../modules/rank_xp')
 const colors = require('../../colors.json');
 const stickyMessage = require("../../modules/stickyMessage");
+const linkFilter = require("../../modules/linkFilter");
 const cooldown = new Map();
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
         if (message.author.bot) return;
 
         const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
-        if(message.guild === staffServer) return;
+        // if(message.guild === staffServer) return;
 
         // const DMC = staffServer.channels.cache.get(process.env.DMLOGS)
 
@@ -64,6 +65,7 @@ module.exports = {
         autoWarn(bot, message);
         rankXP(bot, message);
         stickyMessage(bot, message);
+        linkFilter(bot, message);
 
         // if (!message.content.startsWith(prefix)) return;
 

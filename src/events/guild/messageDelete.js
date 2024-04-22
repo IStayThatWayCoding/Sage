@@ -38,7 +38,7 @@ module.exports = {
             const log = new EmbedBuilder()
             .setAuthor({ name: `${message?.author.username}`, iconURL: message?.author.displayAvatarURL({ dynamic: true }) })
             .setColor("#E04F5F")
-            .addFields({ name: `Author`, value: `${message?.author}`, inline: true },
+            .addFields({ name: `Author`, value: `${message?.author?.username}`, inline: true },
                 { name: `Channel`, value: `${message?.channel}`, inline: true })
             .setFooter({ text: `Delete • ${uuid()}`})
             .setTimestamp()

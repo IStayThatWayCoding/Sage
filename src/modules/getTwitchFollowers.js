@@ -1,5 +1,8 @@
 const { readdirSync, readdir } = require('fs')
 const ExtendedClient = require('../class/ExtendedClient')
+const fetch = require('node-fetch').default;
+const axios = require('axios');
+const getRandomUA = require('../utils/getRandomUA');
 
 /**
  * 
@@ -11,10 +14,11 @@ module.exports = (bot) => {
     
 
     setInterval(async () => {
-        const resolve = await fetch("https://decapi.me/twitch/followcount/itsoasislive")
-        const data = await resolve.JSON();
-        const channel = bot.channels.cache.get("1214645737846214676")
-        // channel.send(`${data}`);
+        const { data } = await axios('https://decapi.net/twitch/followcount/itsoasislive', {
+            headers: {
+                "User-Agent": getRandomUA()
+            },
+        });
 
         function kFormatter(num){
             const regExp = new RegExp('^-?\\d+(?:\.\\d{0,' + (1 || -1) + '})?');

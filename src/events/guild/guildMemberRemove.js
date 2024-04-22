@@ -22,7 +22,7 @@ module.exports = {
     let log = new EmbedBuilder()
       .setColor("Red")
       .setAuthor({ name: `Member Left`, iconURL: member.displayAvatarURL({ dynamic: true })})
-      .setDescription(`<@${member.user.id}> ${member.user.username}`)
+      .setDescription(`${member.user} ${member.user.username}`)
       .setFooter({ text: `ID: ${member.id}`})
       .setTimestamp()
     

@@ -1,5 +1,6 @@
 const { readdirSync, readdir } = require('fs')
 const ExtendedClient = require('../class/ExtendedClient')
+const fetch = require('node-fetch').default;
 
 /**
  * 
@@ -10,8 +11,8 @@ module.exports = (bot) => {
 
     setInterval(async () => {
 
-        let apiKey = "AIzaSyCS6OtPWTMBgeJPCp1ylptV2BMdLaYHYuo"
-        let oasis = "UCUrQNbRe851N0MIVxOGZQjQ"
+        let apiKey = process.env.apiKey
+        let oasis = process.env.oasis
 
         const resolve = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${oasis}&key=${apiKey}`)
         const data = await resolve.json();
