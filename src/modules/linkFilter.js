@@ -13,7 +13,7 @@ module.exports = (bot, message) => {
     const logChannel = bot.channels.cache.get(process.env.MESSAGE_CHANNEL)
     const allowed = [
         "473568312840814610",
-        // "274021702411747328"
+        "274021702411747328"
     ]
 
     if(allowed.includes(message.author.id)) return;
