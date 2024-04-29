@@ -21,7 +21,7 @@ module.exports = {
         if (message.author.bot) return;
 
         const staffServer = bot.guilds.cache.get(process.env.STAFF_SERVER);
-        // if(message.guild === staffServer) return;
+        if(message.guild === staffServer) return;
 
         // const DMC = staffServer.channels.cache.get(process.env.DMLOGS)
 
