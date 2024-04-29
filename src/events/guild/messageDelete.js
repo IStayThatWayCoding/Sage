@@ -34,7 +34,6 @@ module.exports = {
             const decimalEpoch = parseInt(binary, 2) + 1420070400000;
             const timestamp = Date.parse(new Date(decimalEpoch));
 
-
             const log = new EmbedBuilder()
             .setAuthor({ name: `${message?.author.username}`, iconURL: message?.author.displayAvatarURL({ dynamic: true }) })
             .setColor("#E04F5F")
