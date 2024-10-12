@@ -15,10 +15,10 @@ module.exports = {
     .setDescription(
       "Gives specific information on a specific function of the server"
     )
-    .addUserOption(option =>
+    .addStringOption(option =>
       option
-        .setName('user')
-        .setDescription("Member to fetch. Leave blank to use on yourself.")
+        .setName('category')
+        .setDescription("Category")
         .setRequired(false)),
   /**
    * @param {ExtendedClient} bot
