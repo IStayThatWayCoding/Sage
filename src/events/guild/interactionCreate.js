@@ -1,8 +1,11 @@
 const { InteractionType } = require("discord.js");
 const ExtendedClient = require("../../class/ExtendedClient");
 const config = require("../../config");
+const distubeFile = require('../../utils/distube')
+const { DisTube } = require('distube')
 
 const cooldown = new Map();
+
 
 module.exports = {
   event: "interactionCreate",
@@ -13,6 +16,26 @@ module.exports = {
    * @returns
    */
   run: async (bot, interaction) => {
+    const { SpotifyPlugin } = require('@distube/spotify')
+    const { SoundCloudPlugin } = require('@distube/soundcloud')
+    const { YtDlpPlugin } = require('@distube/yt-dlp');
+
+    bot.distube = new DisTube(bot, {
+        leaveOnStop: false,
+        emitNewSongOnly: true,
+        emitAddSongWhenCreatingQueue: false,
+        emitAddListWhenCreatingQueue: false,
+        plugins: [
+            new SpotifyPlugin({
+                emitEventsAfterFetching: true
+            }),
+            new SoundCloudPlugin(),
+            new YtDlpPlugin()
+        ]
+    })
+
+    distubeFile(bot, interaction)
+
     if (!interaction.isCommand()) return;
 
     if (
